@@ -1,40 +1,30 @@
-import { useState } from "react";
+import React, { Component } from "react";
 
-// function App() {
-//   let count = 0;
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0,
+    };
+  }
 
-//   return (
-//     <div>
-//       <h1>Count: {count}</h1>
-//       <button onClick={() => count++}>+</button>
-//       <button onClick={() => count--}>-</button>
-//     </div>
-//   );
-// }
+  handleIncrease = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
 
-// function App() {
-//   let [count, setCount] = useState(0);
+  handleDecrease = () => {
+    this.setState({ count: this.state.count - 1 });
+  };
 
-//   return (
-//     <div>
-//       <h1>Count: {count}</h1>
-//       <button onClick={() => count++}>+</button>
-//       <button onClick={() => count--}>-</button>
-//     </div>
-//   );
-// }
-
-function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div>
-      <h1>Count: {count}</h1>
-      <button onClick={() => setCount(count + 1)}>+</button>
-      <button onClick={() => setCount(count - 1)}>-</button>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <h1>Count: {this.state.count}</h1>
+        <button onClick={this.handleIncrease}>+</button>
+        <button onClick={this.handleDecrease}>-</button>
+      </div>
+    );
+  }
 }
-
 
 export default App;
