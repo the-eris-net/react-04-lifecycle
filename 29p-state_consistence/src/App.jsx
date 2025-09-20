@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function TravelPage() {
+function TravelPage({ isVisible }) {
   const [inputValue, setInputValue] = useState('');
   const [items, setItems] = useState([]);
 
@@ -8,6 +8,10 @@ function TravelPage() {
     setItems([...items, inputValue]);
     setInputValue('');
   };
+
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <div>
@@ -32,7 +36,7 @@ function Travel() {
       <button onClick={() => setIsVisible(!isVisible)}>
         해외여행 버킷 리스트 켜기
       </button>
-      {isVisible && <TravelPage />}
+      <TravelPage isVisible={isVisible} />
     </div>
   );
 }
