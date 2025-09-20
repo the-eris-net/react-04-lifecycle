@@ -12,7 +12,8 @@ export default function App() {
         <Link to="/">Home</Link> |
         <Link to="/about">About</Link>
       </nav>
-      <Outlet context={{ homeLike, setHomeLike, aboutLike, setAboutLike }} />
+      <Outlet context={{ homeLike, setHomeLike, 
+        aboutLike, setAboutLike }} />
     </div>
   );
 }
