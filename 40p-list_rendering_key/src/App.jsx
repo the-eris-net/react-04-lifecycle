@@ -1,33 +1,35 @@
 import { useState } from 'react';
 
-function TravelItem({ index, item, removeItem }) {
+function TravelItem({ index, item: { id, value }, removeItem }) {
   const [liked, setLiked] = useState(0);
 
   const handleButtonClick = (e) => {
     e.stopPropagation();
-    removeItem(index);
-  }
+    removeItem(id);
+  };
 
   return (
     <div onClick={() => setLiked(liked + 1)} style={{ userSelect: 'none' }}>
       <b>{index + 1}.</b>
-      {item} {liked > 0 ? '❤️ x ' + liked : ''}
+      {value} {liked > 0 ? '❤️ x ' + liked : ''}
       <button onClick={handleButtonClick}>삭제</button>
     </div>
   );
 }
+
+let nextId = 0;
 
 function TravelPage({ isVisible }) {
   const [inputValue, setInputValue] = useState('');
   const [items, setItems] = useState([]);
 
   const handleClick = () => {
-    setItems([...items, inputValue]);
+    nextId++;
+    setItems([...items, { id: nextId, value: inputValue }]);
     setInputValue('');
   };
 
-  const removeItem = (index) =>setItems(items.filter((_, i) => i !== index));
-
+  const removeItem = (id) => setItems(items.filter((item) => item.id !== id));
 
   if (!isVisible) {
     return null;
@@ -45,7 +47,7 @@ function TravelPage({ isVisible }) {
       <div>
         {items.map((item, index) => (
           <TravelItem
-            key={index}
+            key={item.id}
             index={index}
             item={item}
             removeItem={removeItem}
