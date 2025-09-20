@@ -1,13 +1,13 @@
-import { useOutletContext } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function About() {
-  const { aboutLike, setAboutLike } = useOutletContext();
+  const [like, setLike] = useState(0);
 
   return (
     <div>
       <h2>About Page</h2>
-      <button onClick={() => setAboutLike(aboutLike + 1)}>
-        자기소개 좋아요 : {aboutLike}
+      <button onClick={() => setLike(like + 1)}>
+        자기소개 좋아요 : {like}
       </button>
     </div>
   );
