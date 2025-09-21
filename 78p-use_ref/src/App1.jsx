@@ -2,23 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 
 function Timer() {
   const [count, setCount] = useState(0);
-  const intervalRef = useRef(null);
+  const [intervalId, setIntervalId] = useState(null);
 
-  console.log('렌더링 발생! (Ref 버전)');
+  console.log('렌더링 발생! (State 버전)');
 
   const startTimer = () => {
-    if (!intervalRef.current) {
+    if (!intervalId) {
       console.log('타이머 시작!');
-      intervalRef.current = setInterval(() => {
+      const id = setInterval(() => {
         setCount((c) => c + 1);
       }, 1000);
+      setIntervalId(id);
     }
   };
 
   const stopTimer = () => {
-    console.log('타이머 중지!');
-    clearInterval(intervalRef.current);
-    intervalRef.current = null;
+      console.log('타이머 중지!');
+      clearInterval(intervalId);
+      setIntervalId(null);
   };
 
   return (
