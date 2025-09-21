@@ -1,42 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-function Sub() {
-  const [text, setText] = useState('');
+function Sub({ setDates }) {
+  useEffect(() => {
+    window.addEventListener('keyup', (e) => {
+      if (e.key.toUpperCase() === 'A') {
+        setDates((prev) => [...prev, new Date().toISOString()]);
+      }
+    });
+  }, []);
 
-  const offsetWidth = document.getElementById('text-span').offsetWidth;
-  const rectWidth = document
-    .getElementById('text-span')
-    .getBoundingClientRect().width;
-
-  return (
-    <div>
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <br />
-      <p>
-        span :{' '}
-        <span id="text-span" style={{ border: '1px solid blue' }}>
-          {text}
-        </span>
-      </p>
-      <p>span 가로길이(offsetWidth) : {offsetWidth}px</p>
-      <p>span 가로길이(getBoundingClientRect) : {rectWidth}px</p>
-    </div>
-  );
+  return <div>키워드 등록!</div>;
 }
 
 function App() {
   const [visible, setVisible] = useState(false);
+  const [date, setDates] = useState([]);
 
   const handleToggle = () => setVisible(!visible);
 
   return (
     <>
-      <button onClick={handleToggle}>{visible ? '숨기기' : '보이기'}</button>
-      {visible && <Sub />}
+      <button onClick={handleToggle}>
+        {visible ? '숨기기' : '보이기'}
+      </button>
+      {visible && <Sub setDates={setDates} />}
+      <ul>
+        {date.map((date, index) => (
+          <li key={index}>{date}</li>
+        ))}
+      </ul>
     </>
   );
 }
