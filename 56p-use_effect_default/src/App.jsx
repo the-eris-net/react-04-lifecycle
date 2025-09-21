@@ -1,29 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 function Sub() {
   const [count, setCount] = useState(0);
 
-  // 마운트 + 언마운트
   useEffect(() => {
-    console.log("componentDidMount: DOM에 마운트 완료");
-    console.log("----------------------------------");
+    console.log('useEffect([]): DOM에 마운트 완료');
 
     return () => {
-      console.log("componentWillUnmount: 컴포넌트 제거");
-      console.log("----------------------------------");
+      console.log('useEffect([]): 컴포넌트 제거');
     };
   }, []);
 
-  // 업데이트 감지
   useEffect(() => {
-    if (count > 0) { // 마운트 직후 실행되는 걸 막기 위해 조건
-      console.log("componentDidUpdate: 업데이트 완료");
-      console.log("현재 count:", count);
-      console.log("----------------------------------");
-    }
+    console.log('useEffect(): 업데이트 완료');
+  });
+
+  useEffect(() => {
+    console.log('useEffect([count]): 업데이트 완료');
+    console.log('현재 count:', count);
   }, [count]);
 
-  console.log("render: UI 그리기");
+  console.log('render: UI 그리기');
 
   return (
     <div>
@@ -40,9 +37,7 @@ function App() {
 
   return (
     <>
-      <button onClick={handleToggle}>
-        {visible ? "숨기기" : "보이기"}
-      </button>
+      <button onClick={handleToggle}>{visible ? '숨기기' : '보이기'}</button>
       {visible && <Sub />}
     </>
   );
