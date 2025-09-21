@@ -1,31 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-function Timer() {
+function useCounter() {
   const [count, setCount] = useState(0);
-  const intervalRef = useRef(null);
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
 
-  console.log('렌더링 발생! (Ref 버전)');
-
-  const startTimer = () => {
-    if (!intervalRef.current) {
-      console.log('타이머 시작!');
-      intervalRef.current = setInterval(() => {
-        setCount((c) => c + 1);
-      }, 1000);
-    }
+  const setter = ({ leftValue = 0, rightValue = 0 }) => {
+    setLeft(left + leftValue);
+    setRight(right + rightValue);
+    setCount(count + 1);
   };
 
-  const stopTimer = () => {
-    console.log('타이머 중지!');
-    clearInterval(intervalRef.current);
-    intervalRef.current = null;
-  };
+  return [count, left, right, setter];
+}
+
+function Timer() {
+  const [count, left, right, setCount] = useCounter();
 
   return (
     <div>
       <p>카운트: {count}</p>
-      <button onClick={startTimer}>시작</button>
-      <button onClick={stopTimer}>중지</button>
+      <button onClick={() => setCount({ leftValue: 1 })}>
+        왼쪽 버튼: {left}
+      </button>
+      <button onClick={() => setCount({ rightValue: 1 })}>
+        오른쪽 버튼: {right}
+      </button>
     </div>
   );
 }

@@ -2,31 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 
 function Timer() {
   const [count, setCount] = useState(0);
-  const [intervalId, setIntervalId] = useState(null);
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
 
-  console.log('렌더링 발생! (State 버전)');
-
-  const startTimer = () => {
-    if (!intervalId) {
-      console.log('타이머 시작!');
-      const id = setInterval(() => {
-        setCount((c) => c + 1);
-      }, 1000);
-      setIntervalId(id);
-    }
-  };
-
-  const stopTimer = () => {
-      console.log('타이머 중지!');
-      clearInterval(intervalId);
-      setIntervalId(null);
-  };
+  useEffect(() => {
+    setCount(count + 1);
+  }, [left, right]);
 
   return (
     <div>
       <p>카운트: {count}</p>
-      <button onClick={startTimer}>시작</button>
-      <button onClick={stopTimer}>중지</button>
+      <button onClick={() => setLeft(left + 1)}>왼쪽 버튼: {left}</button>
+      <button onClick={() => setRight(right + 1)}>오른쪽 버튼: {right}</button>
     </div>
   );
 }
