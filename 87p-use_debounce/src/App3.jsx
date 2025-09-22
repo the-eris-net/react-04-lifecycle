@@ -9,20 +9,32 @@ function Country({ name, url }) {
   );
 }
 
+function useDebounce(value, delay = 300) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
 function App() {
   const [text, setText] = useState('');
+  const debouncedText = useDebounce(text, 300);
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     console.log('데이터 호출');
-    fetch(`https://restcountries.com/v3.1/name/${text}`)
+    fetch(`https://restcountries.com/v3.1/name/${debouncedText}`)
         .then((res) => {
           if (!res.ok) throw new Error('데이터가 없습니다.');
           return res.json();
         })
         .then(setCountries)
         .catch(() => setCountries([]));
-  }, [text]);
+  }, [debouncedText]);
 
   return (
     <div>
