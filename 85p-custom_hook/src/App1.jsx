@@ -1,29 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-function useCounter() {
+function Sub() {
   const [count, setCount] = useState(0);
   const [left, setLeft] = useState(0);
   const [right, setRight] = useState(0);
 
-  const setter = ({ leftValue = 0, rightValue = 0 }) => {
-    setLeft(left + leftValue);
-    setRight(right + rightValue);
+  useEffect(() => {
     setCount(count + 1);
-  };
-
-  return [count, left, right, setter];
-}
-
-function Timer() {
-  const [count, left, right, setCount] = useCounter();
+  }, [left, right]);
 
   return (
     <div>
       <p>카운트: {count}</p>
-      <button onClick={() => setCount({ leftValue: 1 })}>
+      <button onClick={() => setLeft(left + 1)}>
         왼쪽 버튼: {left}
       </button>
-      <button onClick={() => setCount({ rightValue: 1 })}>
+      <button onClick={() => setRight(right + 1)}>
         오른쪽 버튼: {right}
       </button>
     </div>
@@ -36,8 +28,10 @@ function App() {
 
   return (
     <>
-      <button onClick={handleToggle}>{visible ? '숨기기' : '보이기'}</button>
-      {visible && <Timer />}
+      <button onClick={handleToggle}>
+        {visible ? '숨기기' : '보이기'}
+      </button>
+      {visible && <Sub />}
     </>
   );
 }
